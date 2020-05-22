@@ -51,10 +51,11 @@ app.get('/posts/:topic', function (req, res) {
     const storedTitle = _.lowerCase(post.title);
 
     if (storedTitle === requestedTitle) {
-      console.log("Match Found");
-    } else {
-      console.log("No Match");
-    };
+      res.render("post", {
+        title: post.title,
+        content: post.text
+      })
+    }
   });
 });
 
