@@ -55,17 +55,20 @@ app.get('/compose', function (req, res) {
   res.render("compose");
 });
 
-app.get("/posts/:postId", function(req, res){
+app.get("/posts/:postName", function(req, res){
+  const requestedTitle = _.lowerCase(req.params.postName);
 
-  const requestedPostId = req.params.postId;
-  
-    Post.findOne({_id: requestedPostId}, function(err, post){
+  posts.forEach(function(post){
+    const storedTitle = _.lowerCase(post.title);
+
+    if (storedTitle === requestedTitle) {
       res.render("post", {
         title: post.title,
         content: post.content
       });
-    });
+    }
   });
+});
 
 app.post('/compose', function (req, res) {
   const post = new Post({
